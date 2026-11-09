@@ -1,0 +1,9 @@
+--- setup.cfg
++++ setup.cfg
+@@ -31,7 +31,7 @@ install_requires =
+     cffi
+-    odclib>=1.6.0,<1.7.0
++    odc>=4.1.4
+     findlibs>=0.1.0
+     pandas
+     packaging

@@ -9,6 +9,8 @@ package:
 source:
   url: https://github.com/ecmwf/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
   sha256: 7e00c56cfefa26148d03a7839ee346066c8842aef210c83a58ee07a89be74e56
+  patches:
+    - conda-odc.patch
 
 build:
   number: 0
@@ -26,23 +28,21 @@ requirements:
     - findlibs
     - packaging
     - pandas
-    - odc  # [not win]  # Provides the native ODC library; upstream's odclib is PyPI-only
+    - odc >=4.1.4  # [not win]
 
 test:
   imports:
     - pyodc
   requires:
     - python {{ python_min }}
+    - pip
     - pytest
-    - odc  # [not win]
+    - odc >=4.1.4  # [not win]
   source_files:
-    - CHANGELOG.md
-    - pyproject.toml
-    - README.md
-    - setup.cfg
-    - src
     - tests
   commands:
+    - pip check
+    - python -c "import pyodc"
     - ODC_DIR=$PREFIX python -c "import codc"  # [not win]
     - ODC_DIR=$PREFIX python -m pytest  # [not win]
 
@@ -64,5 +64,5 @@ about:
 
 extra:
   recipe-maintainers:
-    - simonsmart
+    - simondsmart
     - dvuckovic
